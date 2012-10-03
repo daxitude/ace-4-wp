@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: ACE Editor for WP Posts and Pages
-Description: Adds a third tab to the post content editor that enables ACE syntax-highlighted code editing
+Plugin Name: ACE Editor for WP
+Description: Adds a third tab to posts, pages, and custom post types that enables ACE syntax-highlighted code editing
 Version: 0.1
 Author: daxitude
 Author URI: http://github.com/daxitude/

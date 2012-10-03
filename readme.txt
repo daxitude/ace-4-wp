@@ -44,9 +44,14 @@ This plugin hasn't been submitted to the WordPress Plugin Directory yet. In the 
 = v0.1 =
 Things are a little finicky when toggling to/from the Visual mode. It will probably obliterate the pretty HTML formatting you spent all that precious time creating. So, I recommend getting rid of Visual mode. You can do this easily yourself under Users -> Your Profile -> 'Disable the visual editor when writing'. You can also (en)force no-Visual-mode in certain places on your site. See no-visual.php for an example.
 
+There are still some bugs, but it's already making me smile :{D
+
 == Screenshots ==
 
 tbd
 
 == TODO ==
+* make height of editor consistent when toggling between modes
+* deal with auto_p 
 * allow users to set their ACE preferences on their profile screen
+
