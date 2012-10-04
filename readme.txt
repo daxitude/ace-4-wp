@@ -12,49 +12,52 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-=== Plugin Name ===
+=== ACE Editor for WP ===
 Contributors: daxitude
-Tags: 
+Tags: admin, code, editor, syntax
 Requires at least: 3.4
 Tested up to: 3.4.2
-Stable tag: 0.1
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin adds a third tab to the post content editor that enables ACE syntax-highlighted code editing
+Adds ACE Editor to the post content editor for syntax-highlighting and more
 
 == Description ==
 
-When editing large posts and pages you may often miss your trusty old TextMate (or insert-favorite-code-editor-name-here). With [ACE Editor](http://ace.ajax.org/) you can have your cake and eat it, too. ACE Editor for WP adds a third tab to post.php and post-new.php that enables ACE Editor on the post content editor.
+This plugin adds an advanced code editor to the post content box on post.php and post-new.php. A third tab is added alongside Visual and HTML modes and you can toggle between the three.
+
+NOTE: Visual Mode tends to eat up most/all of any special formatting. If you want to use ACE I'd suggest disabling Visual mode completely. You can do this easily yourself under Users -> Your Profile -> 'Disable the visual editor when writing'. You can also do it for all users and for specific post types only. See the accompanying file no-visual.php for an example.
+
+This does not work in full screen mode. Yet.
+
+= Features =
+* Syntax highlighting
+* Tabbing
+* Line numbers
+* Auto closing of tags and quotes
+* Line highlighting
+* Default theme is TextMate
+* Fixed-width, soft wrap, adjustable height
+* Remembers your last used mode and loads it up on initial page view
+
+[ACE Editor](http://ace.ajax.org/) can do quite a bit more. If you have integration ideas, let me hear about it
 
 == Installation ==
 
 See [Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
-This plugin hasn't been submitted to the WordPress Plugin Directory yet. In the mean time, you can install it this way:
-
-1. Download the zip (or clone the repo) from [Github](http://github.com/daxitude/wp-abt) and drop it into your site's wp-content/plugins directory.
+1. Download the zip from here or from [Github](http://github.com/daxitude/ace-4-wp) and drop it into your site's wp-content/plugins directory.
 1. Navigate to your site's Admin->Plugins section (wp-admin/plugins.php) and activate the plugin.
-1. Go edit a post/page/custom post type, or add a new one, and look for the "ACE" tab next to the "Visual" and "HTML" tabs at the top right of the editor content box. If you don't have the Visual tab, that's great! It means you or someone else disabled visual mode. That'll make toggling between modes a much more pleasant experience (see more in release notes).
-1. Many of the plugin's admin screens have contextual help
-
-
-== Release Notes ==
-
-= v0.1 =
-Things are a little finicky when toggling to/from the Visual mode. It will probably obliterate the pretty HTML formatting you spent all that precious time creating. So, I recommend getting rid of Visual mode. You can do this easily yourself under Users -> Your Profile -> 'Disable the visual editor when writing'. You can also (en)force no-Visual-mode in certain places on your site. See no-visual.php for an example.
-
-This does not work in full screen mode. Yet.
-
-There are still some bugs, but it's already making me smile :{D
+1. Go edit a post/page/custom-post-type, or add a new one, and look for the ACE tab next to the Visual and HTML Mode tabs at the top right of the content editor box. If you don't see the Visual tab, that's great! It means you or someone else disabled Visual Mode. That'll make toggling between modes a much more pleasant experience (see more in release notes).
 
 == Screenshots ==
 
-tbd
+1. Editing a Page
 
-== TODO ==
+== Todo ==
 * make height of editor consistent when toggling between modes
-* deal with auto_p
+* deal with auto_p? (might help preserve formatting from Visual mode)
 * make it work in full screen mode
 * allow users to set their ACE preferences on their profile screen
 
