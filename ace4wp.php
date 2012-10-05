@@ -32,9 +32,7 @@ class ACE_WP_Editor {
 	}
 	
 	public function add_js() {
-		// ACE loaded from their CDN
-		$url = 'http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js';
-		wp_register_script( 'acejs', $url, '', '1.0', 'true' );
+		wp_register_script( 'acejs', plugins_url( '/ace/ace.js', __FILE__ ), '', '1.0', 'true' );
 		wp_enqueue_script( 'acejs' );
 		
 		wp_register_script( 'aceinit', plugins_url( 'aceinit.js', __FILE__ ), array('acejs'), '1.0', 'true' );
