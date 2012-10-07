@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
 		
 		insertEditor: function () {
 			$('<div id="' + this.aceId + '"></div>')
-				.css({left: 0, top: 0, bottom: 0, right: 0, zIndex: 999 })
+				.css({left: 0, top: 0, bottom: 0, right: 0, zIndex: 1 })
 				.insertAfter(this.$elem);
 		},
 		
@@ -68,8 +68,8 @@ jQuery(document).ready(function ($) {
 		containerResizable: function () {
 			var self = this;
 			this.$container
-				.resizable({handles: 'n,s'})
-				.css({position: 'relative', height: this.defaultHt})
+				.resizable({handles: 's'})
+				.css({position: 'relative', height: this.defaultHt, minHeight: '200px'})
 				.on('resize.aceEditorResize', function() {
 					self.editor.resize(true);
 				});	
@@ -85,7 +85,7 @@ jQuery(document).ready(function ($) {
 			if (!this.loaded) return false;
 			this.$editor.remove();
 			this.editor.destroy();
-			this.$container.resizable('destroy').off('resize.aceEditorResize').css({height: 'initial'});
+			this.$container.resizable('destroy').off('resize.aceEditorResize').css({height: ''});
 			this.$elem.show();
 			this.loaded = false;
 			if (this.onDestroy) this.onDestroy.apply(this, arguments);
@@ -165,7 +165,7 @@ jQuery(document).ready(function ($) {
 					this.$elem.hide();
 					break;
 				case 'html':
-					this.$elem.height('auto');
+					this.$elem.height('');
 					break;
 			}
 			

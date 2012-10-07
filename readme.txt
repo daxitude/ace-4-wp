@@ -15,6 +15,8 @@ This plugin adds an advanced code editor to the post content box on post.php and
 
 NOTE: Visual Mode tends to eat up most/all of any special formatting. If you want to use ACE I'd suggest disabling Visual mode completely. You can do this easily yourself under Users -> Your Profile -> 'Disable the visual editor when writing'. You can also do it for all users and for specific post types only. See the accompanying file no-visual.php for an example.
 
+Not all features work in Internet Explorer v8 and earlier.
+
 This does not work in full screen mode. Yet.
 
 = Features =
@@ -51,6 +53,8 @@ See [Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Installing_
 
 = 0.7 =
 * bugfix - make sure ACE loads on post-new.php
+* bugfix - adjust z-index on ACE Editor so wp nav menus stay on top
+* bugfix - make ACE resizable only in south direction
 
 = 0.6 =
 * bugfix - in JS, check to make sure tinymce is available
