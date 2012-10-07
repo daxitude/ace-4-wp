@@ -3,7 +3,7 @@ Contributors: daxitude
 Tags: admin, code, editor, syntax
 Requires at least: 3.4
 Tested up to: 3.4.2
-Stable tag: 0.6
+Stable tag: 0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,4 +46,15 @@ See [Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Installing_
 * deal with auto_p? (might help preserve formatting from Visual mode)
 * make it work in full screen mode
 * allow users to set their ACE preferences on their profile screen
+
+== Changelog ==
+
+= 0.7 =
+* bugfix - make sure ACE loads on post-new.php
+
+= 0.6 =
+* bugfix - in JS, check to make sure tinymce is available
+
+= 0.5 =
+* initial release
 

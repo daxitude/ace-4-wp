@@ -2,7 +2,7 @@
 /*
 Plugin Name: ACE Editor for WP
 Description: Adds ACE Editor to the post content editor for syntax-highlighting and more
-Version: 0.6
+Version: 0.7
 Author: daxitude
 Author URI: http://github.com/daxitude/
 Plugin URI: http://github.com/daxitude/ace-4-wp
@@ -13,7 +13,7 @@ class ACE_WP_Editor {
 	public function __construct() {
 		global $pagenow;
 		
-		if ( 'post.php' == $pagenow ) {
+		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
 			add_action( 'admin_head', array($this, 'inline_css') );
 			add_action( 'admin_print_scripts-post.php', array($this, 'add_js') );
 			add_action( 'admin_print_scripts-post-new.php', array($this, 'add_js') );
