@@ -123,7 +123,7 @@ jQuery(document).ready(function ($) {
 	$('#content').AceEditor({
 		// overwrites the default
 		setEditorContent: function () {
-			var value = (getUserSetting('editor') == 'tinymce') ?
+			var value = (getUserSetting('editor') == 'tinymce' && window.tinyMCE) ?
 				tinyMCE.get(this.element).getContent() :
 				this.$elem.val(); // need to use val for compat with IE
 			this.editor.getSession().setValue(value);			
