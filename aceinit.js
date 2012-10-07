@@ -1,7 +1,7 @@
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function ($) {	
 	
-	var AceSettings = AceSettings || {};
+	var AceSettings = AceSettings || {};	
 	
 	// constructor function
 	var AceEditor = function (config) {
@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
 				this.$elem.val(); // need to use val for compat with IE
 			this.editor.getSession().setValue(value);			
 		},
-		onInit: function () {
+		onInit: function () {			
 			var self = this;
 			// if the user has visual disabled, the html tab isn't there
 			if (!this.tinymce)
@@ -139,7 +139,21 @@ jQuery(document).ready(function ($) {
 				.prependTo('#wp-content-editor-tools')			
 				.on('click.toggleAce', function () {if (!self.loaded) self.load();});
 			
-			$('#content-html, #content-tmce').on('click.destroyAce', function (e) {self.destroy(e);});
+			$('#content-html, #content-tmce').on('click.destroyAce', function (e) {
+				// quick fix to make sure that the right content area gets set to display
+				// visible when its tab is clicked. for some reason the html textarea gets stuck on
+				// display:none when going from load->ACE->Visual->HTML
+				var clicked = $(e.currentTarget).attr('id').split('-')[1];
+				switch (clicked) {
+					case 'tmce':
+						$('#content_parent').show();
+						break;
+					case 'html':
+						self.$elem.show();
+						break;
+				}
+				self.destroy(e);
+			});
 			
 			if (getUserSetting('ace_editor') == 1) this.load();
 		},
@@ -156,13 +170,19 @@ jQuery(document).ready(function ($) {
 		},
 		onDestroy: function (e) {
 			var clicked = $(e.currentTarget).attr('id').split('-')[1];
+			var check;
 			setUserSetting('ace_editor', 0);
+			setUserSetting('editor', clicked);
 			$("#wp-content-media-buttons").show();
 			$('#wp-content-wrap').addClass(clicked + '-active').removeClass('ace-active');
 			switch (clicked) {
 				case 'tmce':
-					$('#content_parent').show();
 					this.$elem.hide();
+					// the call to show() happens before tinymce has appended #content_parent
+					check = setInterval(function () {
+						$('#content_parent').show();
+						if ($('#content_parent').length > 0) clearInterval(check);
+					}, 100);					
 					break;
 				case 'html':
 					this.$elem.height('');
@@ -172,7 +192,7 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	
+
 });
 	
 

@@ -16,9 +16,10 @@ class ACE_WP_Editor {
 		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
 			add_action( 'admin_head', array($this, 'inline_css') );
 			add_action( 'admin_print_scripts-post.php', array($this, 'add_js') );
-			add_action( 'admin_print_scripts-post-new.php', array($this, 'add_js') );
+			add_action( 'admin_print_scripts-post-new.php', array($this, 'add_js') );			
 		}
 	}
+
 	// silly jQuery ui-resizable sets the width on #wp-content-editor-container even though we
 	// aren't allow resize in that direction. ugh
 	// so few styles, might as well inline it for now rather than add another request
