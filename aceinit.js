@@ -1,6 +1,84 @@
 
 jQuery(document).ready(function ($) {	
 	
+	// initialize ACE Editor for the WP post content textarea#content
+	$('#content').AceEditor({
+		// overwrites the default
+		setEditorContent: function () {
+			var value = (getUserSetting('editor') == 'tinymce' && window.tinyMCE) ?
+				tinyMCE.get(this.element).getContent() :
+				this.$elem.val(); // need to use val for compat with IE
+			this.editor.getSession().setValue(value);			
+		},
+		onInit: function () {
+			var self = this;
+			// if the user has visual disabled, the html tab isn't there
+			if (!this.tinymce)
+				$('<a id="content-html" class="hide-if-no-js wp-switch-editor switch-html">HTML</a>')
+					.prependTo('#wp-content-editor-tools');
+					
+			$('<a id="content-ace" class="hide-if-no-js wp-switch-editor switch-ace">ACE</a>')
+				.prependTo('#wp-content-editor-tools')			
+				.on('click.toggleAce', function () {if (!self.loaded) self.load();});
+			
+			$('#content-html, #content-tmce').on('click.destroyAce', function (e) {
+				// quick fix to make sure that the right content area gets set to display
+				// visible when its tab is clicked. for some reason the html textarea gets stuck on
+				// display:none when going from load->ACE->Visual->HTML
+				var clicked = $(e.currentTarget).attr('id').split('-')[1];
+				switch (clicked) {
+					case 'tmce':
+						$('#content_parent').show();
+						break;
+					case 'html':
+						self.$elem.show();
+						break;
+				}
+				self.destroy(e);
+			});
+			
+			if (getUserSetting('ace_editor') == 1) this.load();
+		},
+		onLoaded: function () {
+			// wp js api-ish thing. tried setting to 'ace' but won't work with the way the 
+			// editor is loaded thru wp server side. not the right filters to hook into
+			// so we'll use html instead, cuz that won't obliterate spacing, indentation, etc
+			// and then set our own value to check against
+			setUserSetting('editor', 'html');
+			setUserSetting('ace_editor', 1);
+			// hide all the default wp stuff
+			$("#wp-content-media-buttons, #content_parent").hide();
+			$('#wp-content-wrap').removeClass('html-active tmce-active').addClass('ace-active');
+		},
+		onDestroy: function (e) {
+			var clicked = $(e.currentTarget).attr('id').split('-')[1];
+			var check;
+			setUserSetting('ace_editor', 0);
+			setUserSetting('editor', clicked);
+			$("#wp-content-media-buttons").show();
+			$('#wp-content-wrap').addClass(clicked + '-active').removeClass('ace-active');
+			switch (clicked) {
+				case 'tmce':
+					this.$elem.hide();
+					// the call to show() happens before tinymce has appended #content_parent
+					check = setInterval(function () {
+						$('#content_parent').show();
+						if ($('#content_parent').length > 0) clearInterval(check);
+					}, 100);					
+					break;
+				case 'html':
+					this.$elem.css({height: '', minHeight: '200px'});
+					break;
+			}
+			
+		}
+	});
+
+
+});
+
+(function ($) {
+	
 	var AceSettings = AceSettings || {};	
 	
 	// constructor function
@@ -21,6 +99,7 @@ jQuery(document).ready(function ($) {
 		
 		if (this.onInit) this.onInit.call(this);		
 	};
+
 	AceEditor.prototype = {
 		
 		load: function () {
@@ -119,81 +198,7 @@ jQuery(document).ready(function ($) {
 		}
 	};
 	
-	// initialize ACE Editor for the WP post content textarea#content
-	$('#content').AceEditor({
-		// overwrites the default
-		setEditorContent: function () {
-			var value = (getUserSetting('editor') == 'tinymce' && window.tinyMCE) ?
-				tinyMCE.get(this.element).getContent() :
-				this.$elem.val(); // need to use val for compat with IE
-			this.editor.getSession().setValue(value);			
-		},
-		onInit: function () {			
-			var self = this;
-			// if the user has visual disabled, the html tab isn't there
-			if (!this.tinymce)
-				$('<a id="content-html" class="hide-if-no-js wp-switch-editor switch-html">HTML</a>')
-					.prependTo('#wp-content-editor-tools');
-					
-			$('<a id="content-ace" class="hide-if-no-js wp-switch-editor switch-ace">ACE</a>')
-				.prependTo('#wp-content-editor-tools')			
-				.on('click.toggleAce', function () {if (!self.loaded) self.load();});
-			
-			$('#content-html, #content-tmce').on('click.destroyAce', function (e) {
-				// quick fix to make sure that the right content area gets set to display
-				// visible when its tab is clicked. for some reason the html textarea gets stuck on
-				// display:none when going from load->ACE->Visual->HTML
-				var clicked = $(e.currentTarget).attr('id').split('-')[1];
-				switch (clicked) {
-					case 'tmce':
-						$('#content_parent').show();
-						break;
-					case 'html':
-						self.$elem.show();
-						break;
-				}
-				self.destroy(e);
-			});
-			
-			if (getUserSetting('ace_editor') == 1) this.load();
-		},
-		onLoaded: function () {
-			// wp js api-ish thing. tried setting to 'ace' but won't work with the way the 
-			// editor is loaded thru wp server side. not the right filters to hook into
-			// so we'll use html instead, cuz that won't obliterate spacing, indentation, etc
-			// and then set our own value to check against
-			setUserSetting('editor', 'html');
-			setUserSetting('ace_editor', 1);
-			// hide all the default wp stuff
-			$("#wp-content-media-buttons, #content_parent").hide();
-			$('#wp-content-wrap').removeClass('html-active tmce-active').addClass('ace-active');
-		},
-		onDestroy: function (e) {
-			var clicked = $(e.currentTarget).attr('id').split('-')[1];
-			var check;
-			setUserSetting('ace_editor', 0);
-			setUserSetting('editor', clicked);
-			$("#wp-content-media-buttons").show();
-			$('#wp-content-wrap').addClass(clicked + '-active').removeClass('ace-active');
-			switch (clicked) {
-				case 'tmce':
-					this.$elem.hide();
-					// the call to show() happens before tinymce has appended #content_parent
-					check = setInterval(function () {
-						$('#content_parent').show();
-						if ($('#content_parent').length > 0) clearInterval(check);
-					}, 100);					
-					break;
-				case 'html':
-					this.$elem.height('');
-					break;
-			}
-			
-		}
-	});
-
-
-});
 	
+})(jQuery);
 
 
