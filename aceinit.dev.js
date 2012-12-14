@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
 			var self = this;
 			// if the user has visual disabled, the html tab isn't there
 			if (!this.tinymce)
-				$('<a id="content-html" class="hide-if-no-js wp-switch-editor switch-html">HTML</a>')
+				$('<a id="content-html" class="hide-if-no-js wp-switch-editor switch-html">Text</a>')
 					.prependTo('#wp-content-editor-tools');
 					
 			$('<a id="content-ace" class="hide-if-no-js wp-switch-editor switch-ace">ACE</a>')
